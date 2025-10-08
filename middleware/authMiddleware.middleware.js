@@ -1,10 +1,11 @@
 const jwt = require("jsonwebtoken");
 
 const jwtAuth = (req, res, next) => {
-  const token = req.cookies?.token;
+  const authHeader = req.headers['authorization'];
 
+  const token = authHeader && authHeader.split(' ')[1];
   if (!token) {
-    return res.status(401).json({ message: "Unauthorized" });
+    return res.status(401).json({ message: "No token provided" });
   }
 
   try {
