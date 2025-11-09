@@ -43,7 +43,26 @@ const showBooks = async (req, res) => {
         res.status(500).json({ message: "Server error" });
     }
 }
+const showBookById = async (req, res) => {
+    try {
+        const bookId = req.params.id;
+        const book = await Books.findById(bookId).populate('seller', 'SellerDetails.shopName').lean();
+        if(!book) return res.status(404).json({ message: "Book not found" });
+        res.status(200).json(book);
+    } catch (error) {
+        res.status(500).json({ message: "Server error" });
+    }
+}
 
+const showBooksBySeller = async (req, res) => {
+    try {
+        const sellerId = req.user.id;
+        const books = await Books.find({ seller: sellerId }).populate('seller', 'SellerDetails.shopName').lean();
+        res.status(200).json(books);
+    } catch (error) {
+        res.status(500).json({ message: "Server error" });
+    }
+}
 const deleteBook = async (req, res) => {
     try {
         const bookId =  req.params.id;
@@ -57,4 +76,4 @@ const deleteBook = async (req, res) => {
     }
 }
 
-module.exports = { createBook, showBooks, deleteBook };
+module.exports = { createBook, showBooks, deleteBook, showBooksBySeller, showBookById };

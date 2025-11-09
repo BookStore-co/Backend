@@ -6,7 +6,7 @@ const userSchema = new mongoose.Schema({
   password: { type: String, required: true },
   mobno: { type: Number, required: true , unique: true, min: 1000000000, max: 9999999999 },
   date: { type: Date, default: Date.now },
-  address: [addressSchema],
+  address: [{ type: mongoose.Schema.Types.ObjectId, ref: "Address" }],
   role: { type: String, enum: ['user', 'admin', 'seller'], default: 'user' },
   status:{type: String , enum: ['pending', 'approved', 'rejected'], default: 'pending'},
   profileImg: { type: String },
