@@ -3,7 +3,7 @@ const router = express.Router();
 const jwtAuth = require("../middleware/authMiddleware.middleware");
 const authorizedRoles = require("../middleware/roles.middleware");
 const { allUsers, getSellers, getPendingSellers, acceptSellerRequest, rejectSellerRequest, everyOne, getSellerById, deleteSeller} = require("../controllers/admin.controller");
-
+const { getTotalMoney } = require("../controllers/cart.controller");
 router.get('/everyOne', jwtAuth, authorizedRoles('admin'), everyOne);
 router.get('/getUsers', jwtAuth, authorizedRoles('admin'), allUsers);
 router.get('/getSellers',jwtAuth, authorizedRoles('admin'), getSellers);
@@ -12,5 +12,5 @@ router.post('/approvePendingRequest/:sellerId', jwtAuth, authorizedRoles('admin'
 router.post('/rejectPendingRequest/:sellerId', jwtAuth, authorizedRoles('admin'), rejectSellerRequest);
 router.get('/getSellerById/:sellerId', jwtAuth, authorizedRoles('admin'),getSellerById);
 router.delete('/deleteSeller/:sellerId', jwtAuth, authorizedRoles('admin'), deleteSeller);
-
+router.get('/totalRevenue', jwtAuth, authorizedRoles('admin'), getTotalMoney);
 module.exports = router;
