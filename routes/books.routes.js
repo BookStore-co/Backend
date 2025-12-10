@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const jwtAuth = require("../middleware/authMiddleware.middleware");
 const authorizedRoles = require("../middleware/roles.middleware");
+const { cloudinaryUpload } = require("../controllers/cloudinaryUpload.controller");
 const {
   createBook,
   showBooks,
@@ -32,4 +33,5 @@ router.get(
   showBooksBySeller
 );
 router.get("/showBookById/:id", showBookById);
+router.post("/cloudUpload", upload.single("coverImage"), cloudinaryUpload);
 module.exports = router;
